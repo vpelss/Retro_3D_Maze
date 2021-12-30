@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//SoftQuad Software//DTD HoTMetaL PRO 6.0::19990601::extensions to HTML 4.0//EN" "hmpro6.dtd">
+<HTML> 
+  <HEAD> 
+	 <TITLE>3D Maze Retro - Rat Maze - DOS Maze - by Emogic</TITLE>
+	 <META NAME="DESCRIPTION"
+	  CONTENT="Javascript Games DOS 3D Maze Rat Maze Generator three 3 Dimension">
+	 <META NAME="KEYWORDS"
+	  CONTENT="Javascript , Games , DOS , 3D , Maze , Rat , Maze , Generator , three , 3 , Dimension">
+	 <META NAME="viewport" CONTENT="width=device-width, initial-scale=1">
+	 <LINK REL="stylesheet" HREF="/jqueryui/jquery-ui.css"> <STYLE TYPE="text/css">
+body {
+	 background-image: url('retro2.jpg'); 
+	 background-repeat: no-repeat;  
+	 background-size: 100% 100%;	
+ }
+ 
+#centerme
+{
+position:fixed; 
+top: 50%; 
+//transform: translateY(-50%) translateX(-50%); 
+left: 50%; 
+}
+.button
+{
+border: black solid 1px;
+} 
+ 
+</STYLE> <SCRIPT SRC="//code.jquery.com/jquery-1.10.2.js"></SCRIPT><SCRIPT
+	 SRC="/jqueryui/jquery-ui.js"></SCRIPT> 
+  </HEAD> 
+  <BODY> 
+	 <TABLE ID="centerme" BGCOLOR="#FFFFFF"
+	  STYLE="border-top: 2pt inset; border-right: 2pt inset; border-bottom: 2pt inset; border-left: 2pt inset">
+		
+		<TR> 
+		  <TD ALIGN="CENTER"> 
+			 <FORM ID="settingform" ACTION="3dmaze.cgi"> 
+				<TABLE CELLPADDING="5" BORDER="0" ALIGN="CENTER"> 
+				  <TR VALIGN="TOP"> 
+					 <TD VALIGN="TOP">Maze Width:
+						<INPUT TYPE="TEXT" NAME="dimx" VALUE="10" SIZE="5" ID="dimx"><BR>Maze Height:
+						<INPUT TYPE="TEXT" NAME="dimy" VALUE="10" SIZE="5" ID="dimy"></TD> 
+					 <TD VALIGN="TOP"><INPUT TYPE="BUTTON" NAME="Button2"
+						VALUE="Set Default" ONCLICK="resetit();"></TD> 
+				  </TR> 
+				</TABLE><INPUT TYPE="SUBMIT" NAME="Submit1" VALUE="Create Maze"
+				CLASS="button"> </FORM></TD> 
+		</TR> 
+		<TR> 
+		  <TD COLSPAN="2"> 
+			 <TABLE CELLPADDING="3" CELLSPACING="0" ALIGN="CENTER"> 
+				<TR> 
+				  <TD ALIGN="CENTER">The game your Great Grand Daddy played.<BR>3D
+					 Maze / Rat Maze / DOS Maze / Retro Maze by:<BR>
+					 <A HREF="http://www.emogic.com/" TARGET="_blank">Emogic</A></TD> 
+				</TR> 
+			 </TABLE></TD> 
+		</TR>
+		
+	 </TABLE> 
+	 
+<!--FB share start-->
+<style>
+.facebook_button {
+    display: inline-block;
+
+    background: #627aac;
+
+    border-top: 1px solid #29447e;
+    border-right: 1px solid #29447e;
+    border-bottom: 1px solid #1a356e;
+    border-left: none;
+
+    height: 20px;
+
+    padding-right: 7px;
+    padding-left: 7px;
+
+    font-weight: bold;
+    font-size: 11px;
+    color: white;
+    text-decoration: none;
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+    line-height: 20px;
+
+    cursor: pointer;
+
+}
+</style>
+
+<DIV ID="fb-root"></DIV> <SCRIPT>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=113125310059&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+function vp()
+{
+var tt = {
+    method: 'share',
+    href: "https://www.emogic.com/",
+  };
+tt.href = window.location.href;
+
+ FB.ui(
+  tt ,
+  function(response) {
+    if (response && !response.error_code) {
+      alert('Posting completed.');
+    } else {
+      alert('Error while posting.');
+    }
+  }
+        );
+};
+</SCRIPT>
+
+<CENTER  >
+<div class="fb-like" data-href="https://apps.facebook.com/threedmaze/" data-layout="standard" data-action="like" data-show-faces="false" data-share="true" id='fb1'></div>
+<div class="facebook_button"  ONCLICK="window.open('https://apps.facebook.com/threedmaze/','_blank');"  id='fb2'>Play this on FB</div>
+<div class="facebook_button"  ONCLICK="window.open('https://www.facebook.com/games/threedmaze/','_blank');" id='fb3'>Add to your FB Apps</div>
+</CENTER>
+
+<script>
+function inIframe () 
+ {
+ try 
+   {
+   return window.self !== window.top;
+   } 
+ catch (e) 
+    {
+    return true;
+    }
+ }
+
+if (inIframe())
+ {
+ document.getElementById("fb2").style.display="none";
+ }
+else
+ {
+ document.getElementById("fb1").style.display="none";
+ document.getElementById("fb3").style.display="none";
+ };
+</SCRIPT>
+<!--FB share end--> 
+
+
+<SCRIPT>
+var viewwidth;
+var viewheigh;
+
+function screenresize()
+{
+var browserwidth = window.innerWidth;
+var browserheight = window.innerHeight;
+
+//shift #center me over and up %50
+var centermewidth = $('#centerme').width() ;
+var centermeheight = $('#centerme').height() ;
+
+var xoffset = (browserwidth / 2) - (centermewidth / 2);
+var yoffset = (browserheight / 2) - (centermeheight / 2);
+$('#centerme').css('left' , xoffset);
+$('#centerme').css('top' , yoffset);
+}
+
+window.onresize = function(){screenresize()} //set method call on browser resize
+
+screenresize();
+	
+</SCRIPT><SCRIPT>
+function resetit()
+	{
+	document.getElementById('dimx').value= '10';
+	document.getElementById('dimy').value= '10';
+	}
+	 	
+</SCRIPT>
+
+<!--needs to be last-->
+  </BODY>
+</HTML>

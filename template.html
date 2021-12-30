@@ -1,0 +1,348 @@
+<!DOCTYPE HTML PUBLIC "-//SoftQuad Software//DTD HoTMetaL PRO 6.0::19990601::extensions to HTML 4.0//EN" "hmpro6.dtd">
+<HTML> 
+  <HEAD> 
+	 <TITLE>3D Maze Retro - Rat Maze - DOS Maze - by Emogic</TITLE>
+	 <META NAME="DESCRIPTION"
+	  CONTENT="Javascript Games DOS 3D Maze Rat Maze Generator three 3 Dimension">
+	 <META NAME="KEYWORDS"
+	  CONTENT="Javascript , Games , DOS , 3D , Maze , Rat , Maze , Generator , three , 3 , Dimension">
+<!--	 <META NAME="viewport"
+	  CONTENT="width=device-width , height=device-height , initial-scale=1">
+	  -->
+	 <LINK REL="stylesheet" HREF="/jqueryui/jquery-ui.css"> <SCRIPT SRC="//code.jquery.com/jquery-1.10.2.js"></SCRIPT> <SCRIPT SRC="/jqueryui/jquery-ui.js"></SCRIPT> <STYLE TYPE="text/css">
+body {
+padding:0px;
+margin:0px;
+	 background-image: url('retro2.jpg'); 
+	 background-repeat: no-repeat;  
+	 background-size: 100% 100%;	
+ }
+ 
+#centerme
+{
+//position:absolute; 
+//top: 50%; 
+//transform: translateY(-50%) translateX(-50%); 
+//left: 50%; 
+}
+
+#maze 
+{
+background-color: white;
+}
+
+.mazecell
+{
+//background-image: url(exit.gif);
+}
+
+.exit 
+{
+background-image: url(exit.gif);
+ background-repeat: no-repeat;  
+	 background-size: 100% 100%;	
+}
+
+.incell
+{
+background-image: url(run.gif);
+ background-repeat: no-repeat;  
+	 background-size: 100% 100%;	
+}
+
+.button
+{
+border: black solid 1px;
+} 
+ 
+
+</STYLE> 
+  </HEAD> 
+  <BODY
+	ONKEYUP="keyinput(event.keyCode);document.getElementById('view').focus();"
+	ONLOAD="screenresize();"> 
+	 <TABLE ALIGN="CENTER" CELLPADDING="0" VALIGN="MIDDLE" ID="centerme"
+	  CELLSPACING="0" BORDER="0"> 
+		<TR> 
+		  <TD ALIGN="CENTER" COLSPAN="3" ID="buttonstr"> 
+			 <FORM><INPUT TYPE="BUTTON" NAME="Button1" VALUE="How do I play"
+				ONCLICK="howtoplay();" ID="b" STYLE="height: 50px" CLASS="button"><INPUT
+				TYPE="BUTTON" NAME="Button3" VALUE="Back to Main"
+				ONCLICK="window.open('./' , '_self')" STYLE="height: 50px"
+				CLASS="button"><INPUT TYPE="BUTTON" NAME="Button2" VALUE="2D/3D"
+				ONCLICK="togglestate();" STYLE="height: 50px" CLASS="button"></FORM></TD> 
+		</TR> 
+		<TR> 
+		  <TD>&nbsp;</TD> 
+		  <TD ALIGN="CENTER" ID="northtr"> 
+			 <FORM ONCLICK="keyinput(38)" STYLE="padding:0pt;margin:0pt;"><INPUT
+				TYPE="BUTTON" NAME="Button4" VALUE="Forward" CLASS="ThreeD , button"
+				STYLE="height: 50px;" ID="forward"><INPUT TYPE="BUTTON" NAME="Button8"
+				VALUE="N" CLASS="TwoD , button" STYLE="height: 50px; width: 50px"
+				ID="north"></FORM></TD> 
+		  <TD>&nbsp;</TD> 
+		</TR> 
+		<TR> 
+		  <TD ID="westtd"> 
+			 <FORM ONCLICK="keyinput(37)" STYLE="padding:0pt;margin:0pt;"><INPUT
+				TYPE="BUTTON" NAME="Button7" VALUE="Turn Left" STYLE="height: 100%;"
+				CLASS="ThreeD , button" ID="turnleft"><INPUT TYPE="BUTTON" NAME="Button11"
+				VALUE="W" CLASS="TwoD , button" STYLE="height: 50px; width: 50px"
+				ID="west"></FORM></TD> 
+		  <TD STYLE="padding:0pt;margin:0pt;" ID="center"> 
+			 <DIV CLASS="ThreeD"> 
+				<TABLE CELLPADDING="0" CELLSPACING="0" ID="view" ALIGN="CENTER"> 
+				  <TR> 
+					 <TD ALIGN="CENTER"
+					  STYLE="border-top: 1pt black solid; border-right: 1pt black solid; border-bottom: 1pt black solid; border-left: 1pt black solid">
+						
+						<DIV ID="top"
+						 STYLE="background-image: url(3dmazesky.jpg)"></DIV> 
+						<DIV ID="bottom" STYLE="background-color: gray"></DIV> </TD> 
+				  </TR> 
+				</TABLE></DIV> 
+			 <DIV ALIGN="CENTER" CLASS="TwoD" ID="maze"><%mazestring%></DIV></TD> 
+		  <TD ID="easttd"> 
+			 <FORM ONCLICK="keyinput(39)" STYLE="padding:0pt;margin:0pt;"><INPUT
+				TYPE="BUTTON" NAME="Button6" VALUE="Turn Right" STYLE="height: 50px;"
+				CLASS="ThreeD , button" ID="turnright"><INPUT TYPE="BUTTON" NAME="Button9"
+				VALUE="E" CLASS="TwoD , button" STYLE="height: 50px; width: 50px"
+				ID="east"></FORM></TD> 
+		</TR> 
+		<TR> 
+		  <TD>&nbsp;</TD> 
+		  <TD ALIGN="CENTER" ID="southtr"> 
+			 <FORM ONCLICK="keyinput(40)" STYLE="padding:0pt;margin:0pt;"><INPUT
+				TYPE="BUTTON" NAME="Button5" VALUE="Backward" CLASS="ThreeD , button"
+				STYLE="height: 50px;" ID="backward"><INPUT TYPE="BUTTON" NAME="Button10"
+				VALUE="S" CLASS="TwoD , button" ID="south"
+				STYLE="height: 50px; width: 50px"></FORM> </TD> 
+		  <TD>&nbsp;</TD> 
+		</TR> 
+		<TR> 
+		  <TD COLSPAN="3" ALIGN="CENTER" ID="messagetr"> 
+			 <DIV ID="message"
+			  STYLE="background-color: black; color: white; border 1pt white solid; height: 75px;"
+			  CLASS="ThreeD"></DIV> </TD> 
+		</TR> 
+		<TR> 
+		  <TD ALIGN="CENTER" COLSPAN="3" ID="fbtr"
+			STYLE="background-color: white"> </TD> 
+		</TR> 
+	 </TABLE>  
+
+<!--FB share start-->
+<style>
+.facebook_button {
+    display: inline-block;
+
+    background: #627aac;
+
+    border-top: 1px solid #29447e;
+    border-right: 1px solid #29447e;
+    border-bottom: 1px solid #1a356e;
+    border-left: none;
+
+    height: 20px;
+
+    padding-right: 7px;
+    padding-left: 7px;
+
+    font-weight: bold;
+    font-size: 11px;
+    color: white;
+    text-decoration: none;
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+    line-height: 20px;
+
+    cursor: pointer;
+
+}
+</style>
+
+<DIV ID="fb-root"></DIV> <SCRIPT>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=113125310059&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+function vp()
+{
+var tt = {
+    method: 'share',
+    href: "https://www.emogic.com/",
+  };
+tt.href = window.location.href;
+
+ FB.ui(
+  tt ,
+  function(response) {
+    if (response && !response.error_code) {
+      alert('Posting completed.');
+    } else {
+      alert('Error while posting.');
+    }
+  }
+        );
+};
+</SCRIPT>
+
+<CENTER  >
+<div class="fb-like" data-href="https://apps.facebook.com/threedmaze/" data-layout="standard" data-action="like" data-show-faces="false" data-share="true" id='fb1'></div>
+<div class="facebook_button"  ONCLICK="window.open('https://apps.facebook.com/threedmaze/','_blank');"  id='fb2'>Play this on FB</div>
+<div class="facebook_button"  ONCLICK="window.open('https://www.facebook.com/games/threedmaze/','_blank');" id='fb3'>Add to your FB Apps</div>
+</CENTER>
+
+<script>
+function inIframe () 
+ {
+ try 
+   {
+   return window.self !== window.top;
+   } 
+ catch (e) 
+    {
+    return true;
+    }
+ }
+
+if (inIframe())
+ {
+ document.getElementById("fb2").style.display="none";
+ }
+else
+ {
+ document.getElementById("fb1").style.display="none";
+ document.getElementById("fb3").style.display="none";
+ };
+</SCRIPT>
+<!--FB share end--> 
+
+
+<%mazevar%>
+	 <DIV ID="dialog-message" TITLE="How do I play?" CLASS="dialogs" STYLE=""> 
+		<P>You can choose between a 2D or 3D view of the maze by clicking on the
+		  2D/3D button. In the 3D view, the on screen buttons or the keyboard arrow keys
+		  correspond to Forward (^), Backward (v), Turn Left (&lt;) and Turn Right
+		  (&gt;). In the 2D view, the on screen buttons or the keyboard arrow keys
+		  correspond to North (^), South (v), East (&gt;) and West (&lt;).The exit is at
+		  the lower right or South East block of the maze. For the most fun, do not look
+		  at the 2D view of the maze.<BR>If you refresh your browser, you will lose this
+		  maze and get a new maze.</P></DIV> 
+	 <DIV ID="dialog-win" TITLE="You win!" CLASS="dialogs"> 
+		<P>You have escaped the maze.</P> </DIV> 
+	 <DIV ID="dialog-turnaround" TITLE="Turn Around" CLASS="dialogs"> 
+		<P>This is the start of the maze! Turn around.</P> </DIV> <SCRIPT>
+
+var viewwidth; 
+var viewheight;
+
+function screenresize()
+{
+var browserwidth = window.innerWidth;
+var browserheight = window.innerHeight;
+
+var heightextrasum =  $('#fbtr').height() + $('#buttonstr').height() + $('#northtr').height() + $('#southtr').height() + $('#messagetr').height() + 5;
+var widthextrasum = $('#westtd').width()+ $('#easttd').width();
+
+potential3dwidth = (browserwidth - widthextrasum)	; //width of 3D view screen
+potential3dheight = (browserheight - heightextrasum)	; //height of 3D view screen 
+
+ratiohoriz = 3;
+ratiovert = 2;
+
+//3D dimension settings
+if ( (potential3dwidth/potential3dheight) >= ( ratiohoriz / ratiovert ) )
+	{
+	if (potential3dwidth)
+	viewwidth = potential3dheight * ratiohoriz / ratiovert;
+	viewheight = potential3dheight ;
+	}
+else
+	{
+	viewwidth = potential3dwidth ;
+	viewheight = potential3dwidth * ratiovert / ratiohoriz; 
+	}
+
+$('#message').css('width' ,viewwidth);
+
+//display width is 1550/1129 (1.37) times greater than input width
+viewwidth = (viewwidth - 10) * 1129 / 1550; //adjust for true display width
+
+//display height is 500/374 (1.34) times greater than input width
+viewheight = (viewheight - 10) * 374 / 500; //adjust for true display height
+
+drawmaze();
+
+//2D dimention settings
+var cellwidth = (browserwidth - widthextrasum) / mazewidth;
+var cellheight = (browserheight - heightextrasum) / mazeheight; 
+if (cellwidth >= cellheight) 
+	{
+	celldim = cellheight;
+	}
+else
+	{
+	celldim = cellwidth;
+	}
+$('.mazecell').css('width' , celldim);
+$('.mazecell').css('height' , celldim);
+
+//shift #center me over and up %50
+var centermewidth = $('#centerme').width() ;
+var centermeheight = $('#centerme').height() ;
+var xoffset = (browserwidth / 2) - (centermewidth / 2);
+var yoffset = (browserheight / 2) - (centermeheight / 2);
+$('#centerme').css('left' , xoffset);
+$('#centerme').css('top' , yoffset);
+
+$('#turnleft').css('height' , $('#view').css('height') );
+$('#west').css('height' , $('#maze').css('height') );
+
+$('#turnright').css('height' , $('#view').css('height') );
+$('#east').css('height' , $('#maze').css('height') );
+
+$('#forward').css('width' , $('#view').css('width') );
+$('#north').css('width' , $('#maze').css('width') );
+
+$('#backward').css('width' , $('#view').css('width') );
+$('#south').css('width' , $('#maze').css('width') );
+
+
+}
+
+window.onresize = function(){screenresize()} //set method call on browser resize
+
+document.getElementById('view').focus(); //focus on maze so we can use cursor keys
+	
+</SCRIPT> <SCRIPT>
+oldcell = document.getElementById('cell_0_0'); //need this to redraw little man
+
+$(".TwoD").hide();
+var state = "ThreeD";
+
+function togglestate()
+{
+if (state == "ThreeD") 
+	{
+	state = 'TwoD'; 
+	$(".TwoD").show();
+	$(".ThreeD").hide();
+	screenresize()
+	return;
+	}; 
+if (state == 'TwoD') 
+	{
+	state = 'ThreeD'; 
+	$(".ThreeD").show(); 
+	$(".TwoD").hide();
+ screenresize() 
+	return;
+	};
+}
+</SCRIPT> 
+<!--needs to be last-->
+	 <SCRIPT SRC="3dmaze.js"></SCRIPT> </BODY>
+</HTML>
